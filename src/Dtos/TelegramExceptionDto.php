@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Softok2\TelegramNotification\Dtos;
 
 use Throwable;
@@ -9,11 +11,9 @@ final readonly class TelegramExceptionDto
     public function __construct(
         public string $message,
         public string $file,
-        public int    $line,
+        public int $line,
         public string $trace
-    )
-    {
-    }
+    ) {}
 
     public static function fromThrowable(Throwable $e): self
     {
@@ -44,5 +44,4 @@ final readonly class TelegramExceptionDto
     {
         return $this->trace;
     }
-
 }

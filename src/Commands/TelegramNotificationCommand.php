@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Softok2\TelegramNotification\Commands;
 
 use Illuminate\Console\Command;
 
-class TelegramNotificationCommand extends Command
+final class TelegramNotificationCommand extends Command
 {
     public $signature = 'telegram-notifications';
 

@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+declare(strict_types=1);
+
 function ask(string $question, string $default = ''): string
 {
     $answer = readline($question.($default ? " ({$default})" : null).': ');
@@ -20,7 +22,7 @@ function confirm(string $question, bool $default = false): bool
         return $default;
     }
 
-    return strtolower($answer) === 'y';
+    return mb_strtolower($answer) === 'y';
 }
 
 function writeln(string $line): void
@@ -30,23 +32,23 @@ function writeln(string $line): void
 
 function run(string $command): string
 {
-    return trim((string) shell_exec($command));
+    return mb_trim((string) shell_exec($command));
 }
 
 function str_after(string $subject, string $search): string
 {
-    $pos = strrpos($subject, $search);
+    $pos = mb_strrpos($subject, $search);
 
     if ($pos === false) {
         return $subject;
     }
 
-    return substr($subject, $pos + strlen($search));
+    return mb_substr($subject, $pos + mb_strlen($search));
 }
 
 function slugify(string $subject): string
 {
-    return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $subject), '-'));
+    return mb_strtolower(mb_trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $subject), '-'));
 }
 
 function title_case(string $subject): string
@@ -76,7 +78,7 @@ function replace_in_file(string $file, array $replacements): void
 function remove_prefix(string $prefix, string $content): string
 {
     if (str_starts_with($content, $prefix)) {
-        return substr($content, strlen($prefix));
+        return mb_substr($content, mb_strlen($prefix));
     }
 
     return $content;
@@ -171,18 +173,18 @@ function getGitHubApiEndpoint(string $endpoint): ?stdClass
 
 function searchCommitsForGitHubUsername(): string
 {
-    $authorName = strtolower(trim(shell_exec('git config user.name')));
+    $authorName = mb_strtolower(mb_trim(shell_exec('git config user.name')));
 
     $committersRaw = shell_exec("git log --author='@users.noreply.github.com' --pretty='%an:%ae' --reverse");
     $committersLines = explode("\n", $committersRaw ?? '');
     $committers = array_filter(array_map(function ($line) use ($authorName) {
-        $line = trim($line);
+        $line = mb_trim($line);
         [$name, $email] = explode(':', $line) + [null, null];
 
         return [
             'name' => $name,
             'email' => $email,
-            'isMatch' => strtolower($name) === $authorName && ! str_contains($name, '[bot]'),
+            'isMatch' => mb_strtolower($name) === $authorName && ! str_contains($name, '[bot]'),
         ];
     }, $committersLines), fn ($item) => $item['isMatch']);
 
@@ -222,7 +224,7 @@ function guessGitHubUsername(): string
 
     // fall back to using the username from the git remote
     $remoteUrl = shell_exec('git config remote.origin.url') ?? '';
-    $remoteUrlParts = explode('/', str_replace(':', '/', trim($remoteUrl)));
+    $remoteUrlParts = explode('/', str_replace(':', '/', mb_trim($remoteUrl)));
 
     return $remoteUrlParts[1] ?? '';
 }
@@ -230,7 +232,7 @@ function guessGitHubUsername(): string
 function guessGitHubVendorInfo($authorName, $username): array
 {
     $remoteUrl = shell_exec('git config remote.origin.url') ?? '';
-    $remoteUrlParts = explode('/', str_replace(':', '/', trim($remoteUrl)));
+    $remoteUrlParts = explode('/', str_replace(':', '/', mb_trim($remoteUrl)));
 
     if (! isset($remoteUrlParts[1])) {
         return [$authorName, $username];
@@ -300,7 +302,7 @@ if (! confirm('Modify files?', true)) {
     exit(1);
 }
 
-$files = (str_starts_with(strtoupper(PHP_OS), 'WIN') ? replaceForWindows() : replaceForAllOtherOSes());
+$files = (str_starts_with(mb_strtoupper(PHP_OS), 'WIN') ? replaceForWindows() : replaceForAllOtherOSes());
 
 foreach ($files as $file) {
     replace_in_file($file, [

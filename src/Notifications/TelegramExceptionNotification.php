@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Softok2\TelegramNotification\Notifications;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Log;
 use JsonException;
-use Laravel\Telescope\Storage\EntryModel;
+use Illuminate\Bus\Queueable;
 use Laravel\Telescope\Telescope;
+use Illuminate\Support\Facades\Log;
+use Laravel\Telescope\Storage\EntryModel;
+use Illuminate\Notifications\Notification;
 use NotificationChannels\Telegram\TelegramMessage;
 use Softok2\TelegramNotification\Dtos\TelegramExceptionDto;
 
-class TelegramExceptionNotification extends Notification
+final class TelegramExceptionNotification extends Notification
 {
     use Queueable;
 
@@ -41,13 +43,13 @@ class TelegramExceptionNotification extends Notification
 
         $uuid = $this->log($content, $exceptionDto->getTrace());
 
-        $telegramMessage  = TelegramMessage::create()
+        $telegramMessage = TelegramMessage::create()
             ->content($content)
             ->options(['parse_mode' => 'Markdown']);
 
-       if($uuid){
-              $telegramMessage->button('View stack trace', url('/telescope/logs/'.$uuid));
-       }
+        if ($uuid) {
+            $telegramMessage->button('View stack trace', url('/telescope/logs/'.$uuid));
+        }
 
         return $telegramMessage;
     }

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Softok2\TelegramNotification\Tests;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Softok2\TelegramNotification\TelegramNotificationServiceProvider;
 
-class TestCase extends Orchestra
+final class TestCase extends Orchestra
 {
     protected function setUp(): void
     {
@@ -15,13 +17,6 @@ class TestCase extends Orchestra
         Factory::guessFactoryNamesUsing(
             fn (string $modelName) => 'Softok2\\TelegramNotification\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
-    }
-
-    protected function getPackageProviders($app)
-    {
-        return [
-            TelegramNotificationServiceProvider::class,
-        ];
     }
 
     public function getEnvironmentSetUp($app)
@@ -33,5 +28,12 @@ class TestCase extends Orchestra
             (include $migration->getRealPath())->up();
          }
          */
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            TelegramNotificationServiceProvider::class,
+        ];
     }
 }

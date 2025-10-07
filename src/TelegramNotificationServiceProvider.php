@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Softok2\TelegramNotification;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Softok2\TelegramNotification\Commands\TelegramNotificationCommand;
 
-class TelegramNotificationServiceProvider extends PackageServiceProvider
+final class TelegramNotificationServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {

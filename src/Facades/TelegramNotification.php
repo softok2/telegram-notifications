@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Softok2\TelegramNotification\Facades;
 
 use Illuminate\Support\Facades\Facade;
@@ -7,7 +9,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @see \Softok2\TelegramNotification\TelegramNotification
  */
-class TelegramNotification extends Facade
+final class TelegramNotification extends Facade
 {
     protected static function getFacadeAccessor(): string
     {

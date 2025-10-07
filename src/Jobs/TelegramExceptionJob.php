@@ -1,20 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Softok2\TelegramNotification\Jobs;
 
-
+use Throwable;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Softok2\TelegramNotification\Dtos\TelegramExceptionDto;
 use Softok2\TelegramNotification\Notifications\TelegramExceptionNotification;
-use Throwable;
 
-class TelegramExceptionJob implements ShouldQueue
+final class TelegramExceptionJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
