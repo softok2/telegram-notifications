@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Softok2\TelegramNotification\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class TelegramNotificationCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'telegram-notifications';
 
     public $description = 'My command';
 
