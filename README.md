@@ -5,15 +5,11 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/softok2/telegram-notifications/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/softok2/telegram-notifications/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/softok2/telegram-notifications.svg?style=flat-square)](https://packagist.org/packages/softok2/telegram-notifications)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+A Laravel wrapper to send notifications to Telegram. Build on top of [Laravel Notification Channels / Telegram](https://github.com/laravel-notification-channels/telegram)
 
 ## Support us
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/telegram-notifications.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/telegram-notifications)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+[<img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_632_webp/af150716842105.562b217f14d54.jpg" width="419px" />](https://softok2.com/)
 
 ## Installation
 
@@ -23,14 +19,8 @@ You can install the package via composer:
 composer require softok2/telegram-notifications
 ```
 
-You can publish and run the migrations with:
 
-```bash
-php artisan vendor:publish --tag="telegram-notifications-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
+Publish the config file with:
 
 ```bash
 php artisan vendor:publish --tag="telegram-notifications-config"
@@ -40,20 +30,15 @@ This is the contents of the published config file:
 
 ```php
 return [
+    'bot_token' => env('SOFTOK2_TELEGRAM_BOT_TOKEN', 'Your bot token here'),
+    'chat_id' => env('SOFTOK2_TELEGRAM_CHAT_ID', 'Your chat ID here'),
 ];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="telegram-notifications-views"
 ```
 
 ## Usage
 
 ```php
-$telegramNotification = new Softok2\TelegramNotification();
-echo $telegramNotification->echoPhrase('Hello, Softok2!');
+ \Softok2\TelegramNotification\Facades\TelegramNotification::sendException($exception)
 ```
 
 ## Testing
@@ -78,6 +63,9 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 - [softok2](https://github.com/softok2)
 - [All Contributors](../../contributors)
+- [Laravel Notification Channels / Telegram](https://github.com/laravel-notification-channels/telegram)
+- [Telegram Bot API](https://core.telegram.org/bots/api)
+
 
 ## License
 
