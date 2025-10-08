@@ -19,7 +19,7 @@ final class TelegramNotificationServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('telegram-notifications')
-            ->hasConfigFile()
+            ->hasConfigFile('telegram-notification')
             ->hasViews()
             ->hasMigration('create_telegram_notifications_table')
             ->hasCommand(TelegramNotificationCommand::class);

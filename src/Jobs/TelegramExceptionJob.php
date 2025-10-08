@@ -24,7 +24,7 @@ final class TelegramExceptionJob implements ShouldQueue
     public function handle(): void
     {
         try {
-            Notification::route('telegram', config('services.telegram-bot-api.chat_id'))
+            Notification::route('telegram', config('telegram-notification.chat_id'))
                 ->notify(new TelegramExceptionNotification(
                     $this->exceptionDto,
                 ));

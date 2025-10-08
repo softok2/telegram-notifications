@@ -44,6 +44,7 @@ final class TelegramExceptionNotification extends Notification
         $uuid = $this->log($content, $exceptionDto->getTrace());
 
         $telegramMessage = TelegramMessage::create()
+            ->token(config('telegram-notification.bot_token'))
             ->content($content)
             ->options(['parse_mode' => 'Markdown']);
 
